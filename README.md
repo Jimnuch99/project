@@ -41,5 +41,6 @@ ga naar feed
 Hulp
 welke hulpfuncties gaan we gebruiken?
 
+
 Plugins en frameworks
 welke plugins en frameworks gaan we gebruiken?

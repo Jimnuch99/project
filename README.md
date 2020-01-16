@@ -40,7 +40,10 @@ POST is used to send data to a server to create/update a resource.
 
 # Hulp
 welke hulpfuncties gaan we gebruiken?
-
+- javascript
+- giffy api
+- bootstrap
 
 # Plugins en frameworks
 welke plugins en frameworks gaan we gebruiken?
+- django/flask

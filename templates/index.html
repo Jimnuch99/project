@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped" style="width:100%">
+      <tr>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Shares</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    {% endfor %}
+{% endblock %}

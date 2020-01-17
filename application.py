@@ -108,33 +108,6 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
-
-@app.route("/quote", methods=["GET", "POST"])
-@login_required
-def quote():
-    """Get stock quote."""
-
-    if request.method == "POST":
-
-        symbol_input = request.form.get("symbol")
-
-        if not symbol_input:
-            return apology("Enter a symbol", 400)
-
-        rows = lookup(symbol_input)
-
-        if not rows:
-            return apology("Invalid Symbol", 400)
-
-        rows["price"] = usd(rows["price"])
-
-        return render_template("quoted.html", rows=rows)
-
-    else:
-        return render_template("quote.html")
-
-#registered students
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
 

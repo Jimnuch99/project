@@ -33,7 +33,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
+db = SQL("sqlite:///meme.db")
 
 
 @app.route("/")
@@ -141,8 +141,6 @@ def register():
         return redirect("/")
     else:
         return render_template("register.html")
-
-
 
 def errorhandler(e):
     """Handle error"""

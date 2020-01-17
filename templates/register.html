@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register" method="post" id="register-form">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" >
+            <div class="invalid-feedback">
+                Username is invalid.
+            </div>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="password" placeholder="Password" type="password">
+        </div>
+         <div class="form-group">
+            <input class="form-control" name="confirmation" placeholder="Confirmation" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+
+    </form>
+
+    <script>
+        var form = document.getElementById("register-form");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            $.get("/check", { username: form.elements.username.value }, function(isAvailable) {
+                if(isAvailable) {
+                    form.submit();
+                } else {
+                    form.elements.username.classList.add("is-invalid");
+                }
+            });
+        });
+    </script>
+{% endblock %}

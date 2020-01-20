@@ -1,38 +1,35 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
 
-{% block title %}
-    Register
-{% endblock %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Webikapp - register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/register.css">
+</head>
 
-{% block main %}
-    <form action="/register" method="post" id="register-form">
-        <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" >
-            <div class="invalid-feedback">
-                Username is invalid.
+<body>
+<div class="container">
+    <div class="col-sm-12 offset-md-4 col-md-4 register">
+        <h1>Register</h1>
+        <form action="/register" method ="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="username" class="form-control" id="username" aria-describedby="usernamehelp">
             </div>
-        </div>
-        <div class="form-group">
-            <input class="form-control" name="password" placeholder="Password" type="password">
-        </div>
-         <div class="form-group">
-            <input class="form-control" name="confirmation" placeholder="Confirmation" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Register</button>
-
-    </form>
-
-    <script>
-        var form = document.getElementById("register-form");
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-            $.get("/check", { username: form.elements.username.value }, function(isAvailable) {
-                if(isAvailable) {
-                    form.submit();
-                } else {
-                    form.elements.username.classList.add("is-invalid");
-                }
-            });
-        });
-    </script>
-{% endblock %}
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <div class="form-group">
+                <label for="password2">Verify password</label>
+                <input type="password" class="form-control" id="confirmation">
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+            <br>
+            <a href="/WEBIKAPP/templates/login.html"><small class="">Already have an account? Sign in!</small></a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

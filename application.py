@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import apology, login_required, lookup, usd
+from helpers import apology, login_required
 
 # Configure application
 app = Flask(__name__)
@@ -23,8 +23,6 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-# Custom filter
-app.jinja_env.filters["usd"] = usd
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
@@ -36,32 +34,7 @@ Session(app)
 db = SQL("sqlite:///meme.db")
 
 
-@app.route("/")
-@login_required
-def index():
-    """Show portfolio of stocks"""
-    user_id = session.get("user_id")
-    # Get stocks of current user
-    stocks = db.execute("SELECT * FROM stocks WHERE user_id = :user_id", user_id=user_id)
-    # look up for every stock to check name and price
-    for stock in stocks:
-        quote = lookup(stock["symbol"])
-        stock["name"] = quote["name"]
-        stock["price"] = quote["price"]
-        stock["total"] = quote["price"] * stock["shares"]
-    # get cash from current user
-    rows = db.execute("SELECT cash FROM users WHERE id = :user_id", user_id=user_id)
-    cash = rows[0]["cash"]
-    # make sum of stocks and cash
-    total = sum(stock["total"] for stock in stocks) + cash
-
-    for stock in stocks:
-        stock["price"] = usd(stock["price"])
-        stock["total"] = usd(stock["total"])
-
-    return render_template("index.html", stocks=stocks, cash=usd(cash), total=usd(total))
-
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def login():
     """Log user in"""
 
@@ -110,37 +83,48 @@ def logout():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    """Register user"""
 
     if request.method == "POST":
-        username_input = request.form.get("username")
-        password_input = request.form.get("password")
 
-        # Ensure username was submitted
-        if not username_input:
-            return apology("must provide username", 400)
+        #vraag de velden in de register.html op
+        gebruikersnaam = request.form.get('username')
+        wachtwoord = request.form.get('password')
+        dubbelcheck = request.form.get('confirmation')
+        wachtwoordhash = generate_password_hash(wachtwoord)
 
-        # Ensure password was submitted
-        elif not password_input:
-            return apology("must provide password", 400)
+        #de foutmeldingen wanneer een van de velden niet is ingevoerd
+        if not gebruikersnaam:
+            return apology("Voer een gebruikersnaam in")
 
-        elif password_input != request.form.get("confirmation"):
-            return apology("must provide 1 password", 400)
+        elif not wachtwoord:
+            return apology('Voer een wachtwoord in')
 
-        elif not request.form.get("confirmation"):
-            return apology("must provide confirmation", 400)
+        elif not dubbelcheck:
+            return apology('Voer een wachtwoord in')
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username = username_input)
+        #geef een foutmelding als de opgegeven wachtwoorden niet overeenkomen
+        elif dubbelcheck != wachtwoord:
+            return apology('Wachtwoorden komen niet overeen')
 
-        if len(rows) == 1:
-            return apology("username already exists", 400)
+        #als alles is goedgegaan, voeg de gebruiker toe in de user-database
+        database = db.execute("SELECT * FROM users WHERE username =:username", username = gebruikersnaam)
 
-        db.execute("INSERT INTO users (username, hash) VALUES (:username, :Passwordhash)",
-        username = username_input, Passwordhash=generate_password_hash(password_input, method ='pbkdf2:sha256', salt_length=8))
+        if gebruikersnaam in database:
+            return apology("Gebruikersnaam is al in gebruik")
 
+        else:
+            db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)",username=gebruikersnaam, hash=wachtwoordhash)
+
+        #session["user_id"] = goedgekeurd
+        flash("Welkom bij memestagram!")
         return redirect("/")
+
     else:
         return render_template("register.html")
+
+
+
 
 def errorhandler(e):
     """Handle error"""

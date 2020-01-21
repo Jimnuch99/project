@@ -1,37 +1,56 @@
-<!DOCTYPE html>
-
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Webikapp - register</title>
-    <!-- For all devices except apple-->
-    <link rel = "icon" type = "image/png" href = "/project/static/memebg.jpg">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/project/static/register.css">
+    <link rel="stylesheet" href="../static/register.css">
 </head>
 
 <body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark border-dark">
+    <a href="/" class="navbar-left"><img src="../static/memestagramlogo.png" height='60'></a>
+    <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+    {% if session.user_id %}
+    <ul class="navbar-nav mr-auto mt-2">
+    <li class="nav-item"><a class="nav-link" href="/quote">Quote</a></li>
+    <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
+    <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
+    <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
+    </ul>
+    <ul class="navbar-nav ml-auto mt-2">
+    <li class="nav-item"><a class="nav-link" href="/add-funds">Add Funds</a></li>
+    <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+    </ul>
+    {% else %}
+    <ul class="navbar-nav ml-auto mt-2">
+    <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+    <li class="nav-item"><a class="nav-link" href="/">Log In</a></li>
+    </ul>
+    {% endif %}
+    </div>
+</nav>
 <div class="container">
     <div class="col-sm-12 offset-md-4 col-md-4 register">
         <h1>Register</h1>
         <form action="/register" method ="post">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="username" class="form-control" id="username" aria-describedby="usernamehelp">
+                <input type="username" class="form-control" name="username" aria-describedby="usernamehelp">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" name="password">
             </div>
             <div class="form-group">
                 <label for="password2">Verify password</label>
-                <input type="password" class="form-control" id="confirmation">
+                <input type="password" class="form-control" name="confirmation">
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
             <br>
-            <a href="/WEBIKAPP/templates/login.html"><small class="">Already have an account? Sign in!</small></a>
+            <a href="login"><small class="">Already have an account? Sign in!</small></a>
         </form>
     </div>
 </div>
 </body>
-</html>

@@ -30,6 +30,10 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+app.config["IMAGE_UPLOADS"] = "/mnt/c/wsl/projects/pythonise/tutorials/flask_series/app/app/static/img/uploads"
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
+app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
+
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///meme.db")
 
@@ -68,7 +72,7 @@ def login():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("login.html")
+        return render_template("register.html")
 
 
 @app.route("/logout")
@@ -82,6 +86,7 @@ def logout():
     return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"])
+@login_required
 def register():
     """Register user"""
 
@@ -122,8 +127,6 @@ def register():
 
     else:
         return render_template("register.html")
-
-
 
 
 def errorhandler(e):

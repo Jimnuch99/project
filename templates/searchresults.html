@@ -1,3 +1,6 @@
 {% for result in results %}
         <iframe src="{{ result.embed_url }}" width="480" height="311" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+        <form action="/postmeme" method="post">
+            <button type="submit" name="embed_url" value="{{ result.embed_url }}">Post meme</button>
+        </form>
 {% endfor %}

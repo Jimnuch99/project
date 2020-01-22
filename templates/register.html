@@ -12,29 +12,16 @@
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
-    {% if session.user_id %}
-    <ul class="navbar-nav mr-auto mt-2">
-    <li class="nav-item"><a class="nav-link" href="/quote">Quote</a></li>
-    <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
-    <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
-    <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
-    </ul>
     <ul class="navbar-nav ml-auto mt-2">
-    <li class="nav-item"><a class="nav-link" href="/add-funds">Add Funds</a></li>
-    <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+    <li class="nav-item"><a class="nav-link" href="/">Register</a></li>
+    <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
     </ul>
-    {% else %}
-    <ul class="navbar-nav ml-auto mt-2">
-    <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-    <li class="nav-item"><a class="nav-link" href="/">Log In</a></li>
-    </ul>
-    {% endif %}
     </div>
 </nav>
 <div class="container">
     <div class="col-sm-12 offset-md-4 col-md-4 register">
         <h1>Register</h1>
-        <form action="/register" method ="post">
+        <form action="/" method ="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="username" class="form-control" name="username" aria-describedby="usernamehelp">

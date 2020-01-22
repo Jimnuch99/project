@@ -1,6 +1,8 @@
 #bdy {
   background-color: #ffffff;
   background-image: url("memebg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 .icon-bar {
   width: 100%; /* Full-width */

@@ -1,4 +1,5 @@
 import os
+import urllib,json
 
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -27,6 +28,8 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///meme.db")
+
+api_key = "SFc7YRbTLzNil5YjMQyFhFI2y66KptWm"
 
 @app.route("/", methods=["GET", "POST"])
 def register():
@@ -105,10 +108,16 @@ def login():
 def feed():
     return render_template("feed.html")
 
-@app.route("/post")
+@app.route("/post", methods=["GET", "POST"])
 @login_required
 def post():
-    return render_template("post.html")
+    if request.method == "POST":
+        search_term = request.form.get("search")
+        response=json.loads(urllib.request.urlopen("http://api.giphy.com/v1/gifs/search?q={}&api_key={}&limit=10".format(search_term, api_key)).read())
+
+        return render_template("searchresults.html", results=response["data"])
+    else:
+        return render_template("post.html")
 
 @app.route("/account")
 @login_required

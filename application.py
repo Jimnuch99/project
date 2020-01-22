@@ -105,6 +105,26 @@ def login():
 def feed():
     return render_template("feed.html")
 
+@app.route("/post")
+@login_required
+def post():
+    return render_template("post.html")
+
+@app.route("/account")
+@login_required
+def account():
+    return render_template("account.html")
+
+@app.route("/search")
+@login_required
+def search():
+    return render_template("search.html")
+
+@app.route("/savedmemes")
+@login_required
+def savedmemes():
+    return render_template("savedmemes.html")
+
 @app.route("/logout")
 def logout():
     """Log user out"""

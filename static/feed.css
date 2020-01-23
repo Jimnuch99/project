@@ -1,26 +1,100 @@
-#bdy {
-  background-color: #ffffff;
-  background-image: url("memebg.jpg");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+html {
+  font-family: Open Sans;
+  font-size: 16px;
+  background-image: url("memebg1.jpg");
+  background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-.icon-bar {
-  width: 100%; /* Full-width */
-  background-color: #555555; /* Dark-grey background */
-  overflow: auto; /* Overflow due to float */
+
+.sidebar {
+  position: fixed;
+  width: 25%;
+  height: 100vh;
+  background: black;
+  font-size: 0.65em;
 }
-.icon-bar a {
-  float: left; /* Float links side by side */
-  text-align: center; /* Center-align text */
-  width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
-  padding: 12px 0; /* Some top and bottom padding */
-  transition: all 0.3s ease; /* Add transition for hover effects */
-  color: white; /* White text color */
-  font-size: 36px; /* Increased font size */
+
+.nav {
+  position: relative;
+  margin: 0 15%;
+  text-align: right;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-weight: bold;
 }
-.icon-bar a:hover {
-  background-color: #000; /* Add a hover color */
+
+.nav ul {
+  list-style: none;
 }
-.active {
-  background-color: #48cf6a; /* Add an active/current color */
+.nav ul li {
+  position: relative;
+  margin: 3.2em 0;
+}
+.nav ul li a {
+  line-height: 5em;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.4em;
+  color: white;
+  display: block;
+  -webkit-transition: all ease-out 300ms;
+  transition: all ease-out 300ms;
+}
+.nav ul li.active a {
+  color: black;
+  background-color: white;
+}
+.nav ul li:not(.active)::after {
+  opacity: 0.2;
+}
+.nav ul li:not(.active):hover a {
+  color: rgba(255, 255, 255, 0.75);
+}
+.nav ul li::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0.2em;
+  background: black;
+  left: 0;
+  bottom: 0;
+  background-image: -webkit-gradient(linear, left top, right top, from(#5e42a6), to(#b74e91));
+  background-image: linear-gradient(to right, #5e42a6, #b74e91);
+}
+
+.twitter {
+  position: relative;
+  width: 75%;
+  float: right;
+  height: 100vh;
+}
+.twitter .container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  height: 100%;
+}
+.twitter a {
+  position: relative;
+}
+.twitter a img {
+  width: 48px;
+  height: 48px;
+}
+.twitter p {
+  text-transform: uppercase;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 20px;
 }

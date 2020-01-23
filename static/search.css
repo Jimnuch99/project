@@ -24,3 +24,7 @@
 .active {
   background-color: #48cf6a; /* Add an active/current color */
 }
+
+#search {
+  background-color: blue;
+}

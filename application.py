@@ -106,7 +106,7 @@ def login():
 @app.route("/feed")
 @login_required
 def feed():
-    rows = db.execute("SELECT url, username FROM memes, users WHERE memes.user_id = users.id ORDER BY timestamp DESC LIMIT 50")
+    rows = db.execute("SELECT url, username FROM memes, users WHERE memes.user_id = users.id ORDER BY timestamp DESC LIMIT 20")
     return render_template("feed.html", memes=rows)
 
 @app.route("/post", methods=["GET", "POST"])

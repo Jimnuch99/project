@@ -114,7 +114,11 @@ def feed():
 def post():
     if request.method == "POST":
         search_term = request.form.get("search")
-        response=json.loads(urllib.request.urlopen("http://api.giphy.com/v1/gifs/search?q={}&api_key={}&limit=100".format(search_term, api_key)).read())
+
+        url = 'http://api.giphy.com/v1/gifs/search'
+        values = { 'q': search_term, 'apiKey': api_key, 'limit': 100 }
+
+        response=json.loads(urllib.request.urlopen(url + '?' + urllib.parse.urlencode(values)).read())
 
         return render_template("searchresults.html", results=response["data"])
     else:
@@ -129,7 +133,6 @@ def postmeme():
                          VALUES(:user_id, :url)",
                          user_id=user_id,
                          url=url)
-
     return redirect("/feed")
 
 @app.route("/account")
@@ -138,9 +141,14 @@ def account():
     return render_template("account.html")
 
 @app.route("/search")
-@login_required
 def search():
-    return render_template("search.html")
+    if request.method == "POST":
+        search_term = request.form.get("search")
+        rows = db.execute("SELECT url, username FROM memes, users WHERE memes.user_id = users.id AND user.username LIKE :username ORDER BY timestamp DESC LIMIT 50",
+                          username='%' + search_term + '%')
+        return render_template("feed.html", memes=rows)
+    else:
+        return render_template("search.html")
 
 @app.route("/savedmemes")
 @login_required

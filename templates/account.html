@@ -18,5 +18,11 @@
   <a href="savedmemes"><i class="fa fa-bookmark-o fa-2x"></i></a>
 </div>
 </center>
+{% for meme in memes %}
+  <div>
+    <B>{{ meme.username }}</B>
+    <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+  </div>
+{% endfor %}
 </body>
 </html>

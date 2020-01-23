@@ -21,7 +21,7 @@
 
 {% for meme in memes %}
   <div>
-    {{ meme.username }}
+    <B>{{ meme.username }}</B>
     <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
   </div>
 {% endfor %}

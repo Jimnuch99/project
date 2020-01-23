@@ -114,7 +114,7 @@ def feed():
 def post():
     if request.method == "POST":
         search_term = request.form.get("search")
-        response=json.loads(urllib.request.urlopen("http://api.giphy.com/v1/gifs/search?q={}&api_key={}&limit=10".format(search_term, api_key)).read())
+        response=json.loads(urllib.request.urlopen("http://api.giphy.com/v1/gifs/search?q={}&api_key={}&limit=100".format(search_term, api_key)).read())
 
         return render_template("searchresults.html", results=response["data"])
     else:

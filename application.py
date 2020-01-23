@@ -106,7 +106,7 @@ def login():
 @app.route("/feed")
 @login_required
 def feed():
-    rows = db.execute("SELECT url, username FROM memes, users WHERE memes.user_id = users.id ORDER BY timestamp DESC LIMIT 50")
+    rows = db.execute("SELECT url, username FROM memes, users WHERE memes.user_id = users.id ORDER BY timestamp DESC LIMIT 20")
     return render_template("feed.html", memes=rows)
 
 @app.route("/post", methods=["GET", "POST"])
@@ -138,7 +138,9 @@ def postmeme():
 @app.route("/account")
 @login_required
 def account():
-    return render_template("account.html")
+    rows = db.execute("SELECT url FROM memes WHERE user_id = :user_id ORDER BY timestamp DESC LIMIT 50", user_id=session["user_id"])
+    print(rows)
+    return render_template("account.html", memes=rows)
 
 @app.route("/search")
 def search():

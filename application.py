@@ -116,7 +116,7 @@ def post():
         search_term = request.form.get("search")
 
         url = 'http://api.giphy.com/v1/gifs/search'
-        values = { 'q': search_term, 'apiKey': api_key, 'limit': 100 }
+        values = { 'q': search_term, 'apiKey': api_key, 'limit': 20 }
 
         response=json.loads(urllib.request.urlopen(url + '?' + urllib.parse.urlencode(values)).read())
 
@@ -138,7 +138,7 @@ def postmeme():
 @app.route("/account")
 @login_required
 def account():
-    rows = db.execute("SELECT url FROM memes WHERE user_id = :user_id ORDER BY timestamp DESC LIMIT 50", user_id=session["user_id"])
+    rows = db.execute("SELECT url FROM memes WHERE user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
     print(rows)
     return render_template("account.html", memes=rows)
 

@@ -93,6 +93,9 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        naam = db.execute("SELECT username FROM users WHERE id=:user_id", user_id=session['user_id'])
+        session['username'] = naam[0]['username']
+        print(session)
 
         # Redirect user to home page
         return redirect("feed")
@@ -179,8 +182,8 @@ def upload():
         os.mkdir(target)
     print(request.files.getlist("file"))
     for upload in request.files.getlist("file"):
-        print(upload)
-        print("{} is the file name".format(upload.filename))
+        #print(upload)
+        #print("{} is the file name".format(upload.filename))
         filename = upload.filename
         ext = os.path.splitext(filename)[1]
         if (ext == ".jpg") or (ext == ".png"):

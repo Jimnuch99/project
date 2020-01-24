@@ -2,18 +2,17 @@
 <html>
 <head>
   <title>Feed</title>
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../static/feed.css">
+<link rel="stylesheet" href="../static/feed.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 </head>
-<body>
 <main class="main">
 <aside class="sidebar">
     <nav class="nav">
       <ul>
-        <li class="active"><a href="/feed">Feed</a></li>
+        <li class="active"><a href="#">Feed</a></li>
         <li><a href="/search">Search</a></li>
-        <li><a href="/post">Upload</a></li>
+        <li><a href="/indexupload">Upload</a></li>
         <li><a href="/account">Account</a></li>
         <li><a href="/savedmemes">Saved Memes</a></li>
         <li><a href="/logout">Logout</a></li>
@@ -21,15 +20,31 @@
     </nav>
   </aside>
 </main>
-    <center>
-    <section class="twitter">
-  {% for meme in memes %}
-  <div>
-    <B>{{ meme.username }}</B>
-    <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+<center>
+<section class="twitter">
+<body>
+<div class="container">
+
+{% for image_name in image_names %}
+<div class="w3-container">
+
+  <div class="w3-card-4 w3-dark-grey" style="width:300px">
+
+    <div class="w3-container w3-center">
+      <img src="{{url_for('send_image', filename=image_name)}}" style="width:80%">
+      <h5>Username</h5>
+        {% endfor %}
+      <div class="w3-section">
+        <button class="w3-button w3-black">Follow</button>
+        <button class="w3-button w3-black">Save</button>
+      </div>
+    </div>
+
   </div>
-{% endfor %}
-  </section>
+</div>
+
+</body>
+</section>
 </center>
 </main>
 </body>

@@ -2,8 +2,9 @@
 <html>
 <head>
   <title>Feed</title>
+<link rel="stylesheet" href="../static/w3.css">
 <link rel="stylesheet" href="../static/feed.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 
 </head>
 <main class="main">
@@ -28,8 +29,7 @@
 {% for image_name in image_names %}
 <div class="w3-container">
 
-  <div class="w3-card-4 w3-dark-grey" style="width:300px">
-
+  <div class="w3-card-4 w3-sand" style="width:350px height:350px;">
     <div class="w3-container w3-center">
       <img src="{{url_for('send_image', filename=image_name)}}" style="width:80%">
       <h5>Username</h5>

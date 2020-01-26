@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Feed</title>
+<title>Feed</title>
 <link rel="stylesheet" href="../static/w3.css">
 <link rel="stylesheet" href="../static/feed.css">
-
-
 </head>
 <main class="main">
 <aside class="sidebar">
@@ -14,7 +12,8 @@
         <li><h3>Welcome memelord, {{session.username}}</h3></li>
         <li class="active"><a href="#">Feed</a></li>
         <li><a href="/search">Search</a></li>
-        <li><a href="/indexupload">Upload</a></li>
+        <li><a href="/indexupload">Upload local file</a></li>
+        <li><a href="/upload">Upload from Giphy</a></li>
         <li><a href="/account">Account</a></li>
         <li><a href="/savedmemes">Saved Memes</a></li>
         <li><a href="/logout">Logout</a></li>
@@ -26,8 +25,10 @@
 <section class="twitter">
 <body>
 <div class="container">
-
-{% for image_name in image_names %}
+<table>
+<tbody>
+<tr>
+<td>{% for image_name in image_names %}
 <div class="w3-container">
 
   <div class="w3-card-4 w3-sand" style="width:350px height:350px;">
@@ -42,7 +43,19 @@
     </div>
 
   </div>
-</div>
+</div></td>
+<td>
+  {% for meme in memes %}
+  <div>
+    <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed"</iframe>
+  </div>
+{% endfor %}
+ </td>
+</tr>
+</tbody>
+</table>
+
+
 
 </body>
 </section>

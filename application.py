@@ -112,7 +112,7 @@ def post():
         search_term = request.form.get("search")
 
         url = 'http://api.giphy.com/v1/gifs/search'
-        values = { 'q': search_term, 'apiKey': api_key, 'limit': 100 }
+        values = { 'q': search_term, 'apiKey': api_key, 'limit': 10 }
 
         response=json.loads(urllib.request.urlopen(url + '?' + urllib.parse.urlencode(values)).read())
 
@@ -182,8 +182,6 @@ def upload():
         os.mkdir(target)
     print(request.files.getlist("file"))
     for upload in request.files.getlist("file"):
-        #print(upload)
-        #print("{} is the file name".format(upload.filename))
         filename = upload.filename
         ext = os.path.splitext(filename)[1]
         if (ext == ".jpg") or (ext == ".png"):
@@ -195,13 +193,15 @@ def upload():
         print("Save it to:", destination)
         upload.save(destination)
 
+
     # return send_from_directory("images", filename, as_attachment=True)
     return render_template("feed.html", image_name=filename)
 
 
 @app.route('/upload/<filename>')
+@login_required
 def send_image(filename):
-    return send_from_directory("images", filename)
+    return send_from_directory("images/{}".format(session["username"]), filename)
 
 
 @app.route('/feed')

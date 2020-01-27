@@ -29,10 +29,10 @@
 <section class="twitter">
 <div class="w3-container">
 {% for meme in memes %}
-  <div class="w3-card-4 w3-pale-red" style="width:45%">
+  <div class="w3-card-4 w3-pale-red" style="width:35%">
     <div class="w3-container w3-center">
       <h4 style="color: black; font-weight: bold">Uploaded by: {{ meme.username }}</h4>
-      <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed"></iframe>
+      <iframe src="{{ meme.url }}" max-width="480" max-height="311" frameBorder="0" class="giphy-embed"></iframe>
       <div class="w3-section">
       	<form action="/savememe" method="post">
         <button type="submit" name="meme_id" value="{{ meme.id }}" class="w3-button w3-black">Save meme</button>

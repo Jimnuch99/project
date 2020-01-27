@@ -1,7 +1,8 @@
 import os
 import urllib,json
+
 from cs50 import SQL
-from flask import Flask, flash, jsonify, redirect, render_template, request, session, send_from_directory
+from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -27,6 +28,7 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///meme.db")
+
 api_key = "SFc7YRbTLzNil5YjMQyFhFI2y66KptWm"
 
 @app.route("/", methods=["GET", "POST"])
@@ -95,7 +97,6 @@ def login():
         session["user_id"] = rows[0]["id"]
         naam = db.execute("SELECT username FROM users WHERE id=:user_id", user_id=session['user_id'])
         session['username'] = naam[0]['username']
-        print(session)
 
         # Redirect user to home page
         return redirect("feed")
@@ -104,6 +105,11 @@ def login():
     else:
         return render_template("login.html")
 
+@app.route("/feed")
+@login_required
+def feed():
+    rows = db.execute("SELECT url, username, memes.id FROM memes, users WHERE memes.user_id = users.id ORDER BY timestamp DESC LIMIT 20")
+    return render_template("feed.html", memes=rows)
 
 @app.route("/post", methods=["GET", "POST"])
 @login_required
@@ -112,7 +118,7 @@ def post():
         search_term = request.form.get("search")
 
         url = 'http://api.giphy.com/v1/gifs/search'
-        values = { 'q': search_term, 'apiKey': api_key, 'limit': 10 }
+        values = { 'q': search_term, 'apiKey': api_key, 'limit': 20 }
 
         response=json.loads(urllib.request.urlopen(url + '?' + urllib.parse.urlencode(values)).read())
 
@@ -134,7 +140,7 @@ def postmeme():
 @app.route("/account")
 @login_required
 def account():
-    rows = db.execute("SELECT url FROM memes WHERE user_id = :user_id ORDER BY timestamp DESC LIMIT 50", user_id=session["user_id"])
+    rows = db.execute("SELECT url FROM memes WHERE user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
     print(rows)
     return render_template("account.html", memes=rows)
 
@@ -148,10 +154,23 @@ def search():
     else:
         return render_template("search.html")
 
+@app.route("/savememe", methods=["POST"])
+@login_required
+def savememe():
+    user_id = session.get("user_id")
+    meme_id = request.form.get("meme_id")
+    result = db.execute("INSERT INTO savedmemes (user_id, meme_id) \
+                         VALUES(:user_id, :meme_id)",
+                         user_id=user_id,
+                         meme_id=meme_id)
+    return redirect("/feed")
+
 @app.route("/savedmemes")
 @login_required
 def savedmemes():
-    return render_template("savedmemes.html")
+    rows = db.execute("SELECT url FROM savedmemes, memes WHERE savedmemes.meme_id = memes.id AND savedmemes.user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
+    print(rows)
+    return render_template("savedmemes.html", memes=rows)
 
 @app.route("/logout")
 def logout():
@@ -162,58 +181,6 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-
-@app.route("/indexupload")
-@login_required
-def indexupload():
-    return render_template("indexupload.html")
-
-
-@app.route("/feed", methods=["POST"])
-@login_required
-def upload():
-
-    target = os.path.join(APP_ROOT, '../project/images')
-    print(target)
-    if not os.path.isdir(target):
-        os.mkdir(target)
-    print(request.files.getlist("file"))
-    for upload in request.files.getlist("file"):
-        filename = upload.filename
-        ext = os.path.splitext(filename)[1]
-        if (ext == ".jpg") or (ext == ".png"):
-            print("File supported moving on...")
-        else:
-            render_template("Error.html", message="Files uploaded are not supported...")
-        destination = "/".join([target, filename])
-        print("Accept incoming file:", filename)
-        print("Save it to:", destination)
-        upload.save(destination)
-
-
-    # return send_from_directory("images", filename, as_attachment=True)
-    return render_template("feed.html", image_name=filename)
-
-
-@app.route('/upload/<filename>')
-@login_required
-def send_image(filename):
-    return send_from_directory("images/{}".format(session["username"]), filename)
-
-
-@app.route('/feed')
-@login_required
-def feed():
-    image_names = os.listdir('../project/images')
-    print(image_names)
-    return render_template("feed.html", image_names=image_names)
-
-
-if __name__ == "__main__":
-    app.run(port=4555, debug=True)
 
 
 

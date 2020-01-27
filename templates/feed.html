@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Feed</title>
-<link rel="stylesheet" href="../static/w3.css">
-<link rel="stylesheet" href="../static/feed.css">
+  <title>Feed</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../static/feed.css">
+  <link rel="stylesheet" href="../static/w3.css">
+
+
 </head>
+<body>
 <main class="main">
 <aside class="sidebar">
     <nav class="nav">
       <ul>
         <li><h3>Welcome memelord, {{session.username}}</h3></li>
-        <li class="active"><a href="#">Feed</a></li>
+        <li class="active"><a href="/feed">Feed</a></li>
         <li><a href="/search">Search</a></li>
-        <li><a href="/indexupload">Upload local file</a></li>
-        <li><a href="/upload">Upload from Giphy</a></li>
+        <li><a href="/post">Upload</a></li>
         <li><a href="/account">Account</a></li>
         <li><a href="/savedmemes">Saved Memes</a></li>
         <li><a href="/logout">Logout</a></li>
@@ -23,41 +27,21 @@
 </main>
 <center>
 <section class="twitter">
-<body>
-<div class="container">
-<table>
-<tbody>
-<tr>
-<td>{% for image_name in image_names %}
 <div class="w3-container">
-
-  <div class="w3-card-4 w3-sand" style="width:350px height:350px;">
+{% for meme in memes %}
+  <div class="w3-card-4 w3-pale-red" style="width:45%">
     <div class="w3-container w3-center">
-      <img src="{{url_for('send_image', filename=image_name)}}" style="width:80%">
-      <h5>Username</h5>
-        {% endfor %}
+      <h3 style="color: black; font-weight: bold; font-family: 'BrushScript BT', cursive;">Uploaded by: {{ meme.username }}</h3>
+      <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed"></iframe>
       <div class="w3-section">
-        <button class="w3-button w3-black">Follow</button>
-        <button class="w3-button w3-black">Save</button>
+      	<form action="/savememe" method="post">
+        <button type="submit" name="meme_id" value="{{ meme.id }}" class="w3-button w3-black">Save meme</button>
+        </form>
       </div>
     </div>
-
   </div>
-</div></td>
-<td>
-  {% for meme in memes %}
-  <div>
-    <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed"</iframe>
-  </div>
+</div>
 {% endfor %}
- </td>
-</tr>
-</tbody>
-</table>
-
-
-
-</body>
 </section>
 </center>
 </main>

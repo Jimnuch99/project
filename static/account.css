@@ -43,7 +43,7 @@ html {
   -webkit-transition: all ease-out 300ms;
   transition: all ease-out 300ms;
 }
-.nav ul li.active a {
+.nav ul .active a {
   color: black;
   background-color: white;
 }

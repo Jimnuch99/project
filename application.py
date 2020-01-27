@@ -175,14 +175,20 @@ def savedmemes():
 @app.route("/followuser")
 @login_required
 def followuser():
+    user_id = session.get("user_id")
+    user_id2 = request.form.get("user_id2")
+    result = db.execute("INSERT INTO followedusers (user_id, user_id2) \
+                         VALUES(:user_id, :meme_id)",
+                         user_id=user_id,
+                         user_id2=user_id2)
     return redirect("/feed")
 
 @app.route("/personalfeed")
 @login_required
 def personalfeed():
-
+    rows = db.execute("SELECT url FROM savedmemes, memes WHERE savedmemes.meme_id = memes.id AND savedmemes.user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
     print(rows)
-    return render_template("savedmemes.html", memes=rows)
+    return render_template("personalfeed.html", memes=rows)
 
 @app.route("/logout")
 def logout():

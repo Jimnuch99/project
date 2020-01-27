@@ -153,12 +153,19 @@ def account():
 def search():
     if request.method == "POST":
         search_term = request.form.get("search")
-        rows = db.execute("SELECT username FROM users WHERE username LIKE '%(:search_term)%'")
+        rows = db.execute("SELECT id, username FROM users WHERE username LIKE %s", ("%" + search_term + "%",))
         for row in rows:
             print(row)
-        return render_template("userresults.html")
+        return render_template("userresults.html", results=rows)
     else:
         return render_template("search.html")
+
+@app.route("/followUser")
+@login_required
+def followuser():
+    user_id = self.request.get("userId")
+    print(user_id)
+    return user_id
 
 @app.route("/savememe", methods=["POST"])
 @login_required

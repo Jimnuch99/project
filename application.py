@@ -172,6 +172,18 @@ def savedmemes():
     print(rows)
     return render_template("savedmemes.html", memes=rows)
 
+@app.route("/followuser")
+@login_required
+def followuser():
+    return redirect("/feed")
+
+@app.route("/personalfeed")
+@login_required
+def personalfeed():
+
+    print(rows)
+    return render_template("savedmemes.html", memes=rows)
+
 @app.route("/logout")
 def logout():
     """Log user out"""

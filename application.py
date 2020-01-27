@@ -1,5 +1,6 @@
 import os
 import urllib,json
+import re
 
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -43,6 +44,10 @@ def register():
         # ensure password was submitted
         elif not request.form.get("password"):
             return apology("Must provide password")
+
+        elif not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', request.form.get("password")):
+         # no match
+            return apology("Password must contain at least one capital letter")
 
         # ensure password and verified password is the same
         elif request.form.get("password") != request.form.get("confirmation"):
@@ -171,24 +176,6 @@ def savedmemes():
     rows = db.execute("SELECT url FROM savedmemes, memes WHERE savedmemes.meme_id = memes.id AND savedmemes.user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
     print(rows)
     return render_template("savedmemes.html", memes=rows)
-
-@app.route("/followuser")
-@login_required
-def followuser():
-    user_id = session.get("user_id")
-    user_id2 = request.form.get("user_id2")
-    result = db.execute("INSERT INTO followedusers (user_id, user_id2) \
-                         VALUES(:user_id, :meme_id)",
-                         user_id=user_id,
-                         user_id2=user_id2)
-    return redirect("/feed")
-
-@app.route("/personalfeed")
-@login_required
-def personalfeed():
-    rows = db.execute("SELECT url FROM savedmemes, memes WHERE savedmemes.meme_id = memes.id AND savedmemes.user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
-    print(rows)
-    return render_template("personalfeed.html", memes=rows)
 
 @app.route("/logout")
 def logout():

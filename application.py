@@ -47,7 +47,7 @@ def register():
 
         elif not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', request.form.get("password")):
          # no match
-            return apology("Password must contain at least one capital letter")
+            return apology("Password must contain at least 8 characters, one uppercase letter, one special character and one number")
 
         # ensure password and verified password is the same
         elif request.form.get("password") != request.form.get("confirmation"):
@@ -149,13 +149,14 @@ def account():
     print(rows)
     return render_template("account.html", memes=rows)
 
-@app.route("/search")
+@app.route("/search", methods=["GET", "POST"])
 def search():
     if request.method == "POST":
         search_term = request.form.get("search")
-        rows = db.execute("SELECT url, username FROM memes, users WHERE memes.user_id = users.id AND user.username LIKE :username ORDER BY timestamp DESC LIMIT 50",
-                          username='%' + search_term + '%')
-        return render_template("feed.html", memes=rows)
+        rows = db.execute("SELECT username FROM users WHERE username LIKE '%(:search_term)%'")
+        for row in rows:
+            print(row)
+        return render_template("userresults.html")
     else:
         return render_template("search.html")
 

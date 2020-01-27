@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<HTML>
+<head>
+  <title>Account</title>
+  <link rel="stylesheet" type="text/css" href="/static/account.css">
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body id = "bdy">
+<main class="main">
+<aside class="sidebar">
+    <nav class="nav">
+      <ul>
+        <li class="active"><a href="/feed">Feed</a></li>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/post">Upload</a></li>
+        <li><a href="/account">Account</a></li>
+        <li><a href="/savedmemes">Saved Memes</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+</main>
+<center>
+{% for meme in memes %}
+  <div>
+    <B>{{ meme.username }}</B>
+    <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+  </div>
+{% endfor %}
+</center>
+</body>
+</html>

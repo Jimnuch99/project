@@ -31,10 +31,10 @@ Session(app)
 db = SQL("sqlite:///meme.db")
 api_key = "SFc7YRbTLzNil5YjMQyFhFI2y66KptWm"
 
-@app.route("/personalfeed", methods =["GET", "POST"])
-@login_required
-def personalfeed():
-    return render_template("personalfeed.html")
+# @app.route("/personalfeed", methods =["GET", "POST"])
+# @login_required
+# def personalfeed():
+#     return render_template("personalfeed.html")
 
 @app.route("/", methods=["GET", "POST"])
 def register():
@@ -174,12 +174,12 @@ def search():
     else:
         return render_template("search.html")
 
-@app.route("/followUser")
-@login_required
-def followuser():
-    user_id = self.request.get("userId")
-    print(user_id)
-    return user_id
+# @app.route("/followUser")
+# @login_required
+# def followuser():
+#     user_id = self.request.get("userId")
+#     print(user_id)
+#     return user_id
 
 @app.route("/savememe", methods=["POST"])
 @login_required
@@ -198,6 +198,24 @@ def savedmemes():
     rows = db.execute("SELECT url FROM savedmemes, memes WHERE savedmemes.meme_id = memes.id AND savedmemes.user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
     print(rows)
     return render_template("savedmemes.html", memes=rows)
+
+@app.route("/followuser")
+@login_required
+def followuser():
+    user_id = session.get("user_id")
+    user_id2 = request.form.get("user_id2")
+    result = db.execute("INSERT INTO followedusers (user_id, user_id2) \
+                         VALUES(:user_id, :user_id2)",
+                         user_id=user_id,
+                         user_id2=user_id2)
+    return redirect("/feed")
+
+@app.route("/personalfeed")
+@login_required
+def personalfeed():
+    rows = db.execute("SELECT user_id2 FROM followedusers, memes WHERE followedusers.user_id2 = user_id2 AND followedusers.user_id2 = :user_id", user_id=session["user_id"])
+    print(rows)
+    return render_template("personalfeed.html", followedusers=rows)
 
 @app.route("/logout")
 def logout():

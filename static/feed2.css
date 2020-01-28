@@ -1,0 +1,59 @@
+.main-feed {
+    margin-top: 50px;
+}
+
+.feed-item {
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 50px;
+    padding-bottom: 10px;
+}
+.feed-item .profile-pic img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.feed-item .username h6 {
+    margin-top: 5px;
+}
+
+.feed-item .feed-nav {
+    padding: 15px;
+}
+
+.feed-item .feed-image {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background: black;
+}
+
+.feed-item .commands {
+    padding: 10px 15px;
+}
+
+.feed-item .commands .like:hover {
+    cursor: pointer;
+}
+
+.feed-item .timestamp small{
+    color: grey;
+}
+
+.feed-item .disabled {
+    cursor: default;
+}
+
+.feed-item .comment-input {
+    margin-top: 10px;
+}
+
+.personal-info {
+    position: fixed;
+    float: right;
+    left: 70%;
+    background-color: cornflowerblue;
+    border-radius: 3%;
+}

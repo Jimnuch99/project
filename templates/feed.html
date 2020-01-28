@@ -68,48 +68,15 @@
                 </div>
                 <div class="row commands">
                     <div class="col-sm-1 like" style="margin: 0 0 -15px -15px">
-                        <i class="fa fa-download" style="color:black;font-size:20px"></i>
+                    <tr>
+                    <td><form action="/savememe" method="post">
+                    <button type="submit" name="meme_id" value="{{ meme.id }}" class="w3-button w3-black" float="left">Save meme</button>
+                    </form></td>
+                    <td><form><button type="submit" name="meme_id" value="{{ meme.id }}" class="w3-button w3-green" float-"left">Follow @ {{meme.username}}</button>
+                    </form></td>
+                    </tr>
                     </div>
-                    <div class="col-sm-10">
-                        <small><b>36k likes</b></small>
-                    </div>
-                </div>
-                <div class="row">
 
-                </div>
-                <div class="row comments">
-                    <div class="col-sm-12">
-                        <div class="small-username">
-                            <small><b>Tomskilogt69</b></small>
-                            <small>Little meme about my life</small>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="small-username">
-                            <small><b>Tomskilogt69</b></small>
-                            <small>Little meme about my life</small>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="small-username">
-                            <small><b>Tomskilogt69</b></small>
-                            <small>Little meme about my life</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="row timestamp">
-                    <div class="col-sm-12">
-                        <small>{{meme.timestamp}}</small>
-                    </div>
-                </div>
-                <div class="row comment-input">
-                    <div class="col-sm-10">
-                    </div>
-                    <div class="col-sm-2">
-                        <form>
-                        <button type="submit" name="meme_id" value="{{ meme.id }}" class="w3-button w3-green">Follow {{meme.username}}</button>
-                        </form>
-                    </div>
                 </div>
             </div>
             {% endfor %}

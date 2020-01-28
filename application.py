@@ -10,7 +10,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
-from helpers import apology, login_required
+from helpers import login_required
 
 app = Flask(__name__)
 
@@ -43,19 +43,25 @@ def register():
 
         # ensure username was submitted
         if not request.form.get("username"):
-            return apology("Must provide username")
+            flash("Must provide username")
+            return redirect('/')
 
         # ensure password was submitted
         elif not request.form.get("password"):
-            return apology("Must provide password")
+            flash("Must provide password")
+            return redirect("/")
 
         elif not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', request.form.get("password")):
          # no match
-            return apology("Password must contain at least 8 characters, one uppercase letter, one special character and one number")
+            flash("Passwords don't match")
+            return redirect('/')
+
+            #return apology("Password must contain at least 8 characters, one uppercase letter, one special character and one number")
 
         # ensure password and verified password is the same
         elif request.form.get("password") != request.form.get("confirmation"):
-            return apology("password doesn't match")
+            flash("Passwords don't match")
+            return redirect('/')
 
         # insert the new user into users, storing the hash of the user's password
         result = db.execute("INSERT INTO users (username, hash) \
@@ -64,10 +70,11 @@ def register():
                              hash=generate_password_hash(request.form.get("password")))
 
         if not result:
-            return apology("Username already exist")
+            flash("Username already exist")
+            return redirect("/")
 
-        # remember which user has logged in
         session["user_id"] = result
+        flash("Registration succesful")
 
         # redirect user to home page
         return redirect("/login")
@@ -88,11 +95,13 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            flash("Must provide username")
+            return redirect('/login')
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            flash("Must provide password")
+            return redirect('/login')
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username",
@@ -100,7 +109,8 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return apology("invalid username and/or password", 403)
+            flash("Combination of username and password doesn't exist")
+            return redirect('/login')
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -108,7 +118,7 @@ def login():
         session['username'] = naam[0]['username']
 
         # Redirect user to home page
-        return redirect("feed")
+        return redirect("/feed")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -201,13 +211,3 @@ def logout():
 
 
 
-def errorhandler(e):
-    """Handle error"""
-    if not isinstance(e, HTTPException):
-        e = InternalServerError()
-    return apology(e.name, e.code)
-
-
-# Listen for errors
-for code in default_exceptions:
-    app.errorhandler(code)(errorhandler)

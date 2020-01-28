@@ -37,4 +37,12 @@ body::before {
     .register {
         margin-top: 200px;
     }
+
+.alert-primary {
+    color: white;
+    font-weight: bold;
+    background-color: #950658;
+    border-color: white;
+    opacity: 0.82;
+}
 }

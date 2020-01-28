@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+html {
+  font-family: Open Sans !important;
+  font-size: 16px;
+  background-image: url("memebg1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.sidebar {
+  position: fixed;
+  width: 25%;
+  height: 100vh;
+  background: #000000c7;
+  font-size: 0.65em;
+}
+
+.nav {
+  position: relative;
+  margin: 0 15%;
+  text-align: right;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-weight: bold;
+}
+
+.nav ul {
+  list-style: none;
+}
+.nav ul li {
+  position: relative;
+  margin: 3.2em 0;
+}
+.nav ul li a {
+  line-height: 5em;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.4em;
+  color: white;
+  display: block;
+  -webkit-transition: all ease-out 300ms;
+  transition: all ease-out 300ms;
+}
+.nav ul li.active a {
+  color: white;
+  background-color: #6d33765c;
+  font-weight: bold;
+}
+.nav ul li:not(.active)::after {
+  opacity: 0.2;
+}
+.nav ul li:not(.active):hover a {
+  color: rgba(255, 255, 255, 0.75);
+}
+.nav ul li::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0.2em;
+  background: black;
+  left: 0;
+  bottom: 0;
+  background-image: -webkit-gradient(linear, left top, right top, from(#5e42a6), to(#b74e91));
+  background-image: linear-gradient(to right, #5e42a6, #b74e91);
+}
+
+.twitter {
+  position: relative;
+  width: 75%;
+  float: right;
+  height: 100vh;
+}
+.twitter .container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  height: 100%;
+}
+.twitter a {
+  position: relative;
+}
+.twitter a img {
+  width: 48px;
+  height: 48px;
+}
+.twitter p {
+  text-transform: uppercase;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.font-icon i:after {
+  position: absolute;
+  content: '3';
+  background: #E74C3C;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  padding: 3px 4px 4px 3px;
+  text-align: center;
+  top: 12px;
+  right: 11px;
+}
+.font-icon {
+  padding: 8px 10px;
+}
+.font-icon i {
+  font-size: 24px;
+}
+.fa {
+  font-size: 30px;
+  float: left;
+  margin-top: 10px;
+  color: white;
+}
+h4.titlecard{
+  font-family: 'Segoe Print',sans-serif;
+  font-weight: bold;
+}
+
+.main-feed {
+    margin-top: 50px;
+}
+
+.feed-item {
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid #e6e6e6;
+    margin-bottom: 50px;
+    padding-bottom: 10px;
+}
+.feed-item .profile-pic img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.feed-item .username h6 {
+    margin-top: 5px;
+}
+
+.feed-item .feed-nav {
+    padding: 15px;
+}
+
+.feed-item .feed-image {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background: #ef5c06d4;
+}
+
+.feed-item .commands {
+    padding: 10px 15px;
+}
+
+.feed-item .commands .like:hover {
+    cursor: pointer;
+}
+
+.feed-item .timestamp small{
+    color: grey;
+}
+
+.feed-item .disabled {
+    cursor: default;
+}
+
+.feed-item .comment-input {
+    margin-top: 10px;
+}
+
+.personal-info {
+    position: fixed;
+    float: right;
+    left: 70%;
+    background-color: cornflowerblue;
+    border-radius: 3%;
+}
+h6.username{
+  color: black;
+}

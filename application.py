@@ -29,8 +29,12 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///meme.db")
-
 api_key = "SFc7YRbTLzNil5YjMQyFhFI2y66KptWm"
+
+@app.route("/personalfeed", methods =["GET", "POST"])
+@login_required
+def personalfeed():
+    return render_template("personalfeed.html")
 
 @app.route("/", methods=["GET", "POST"])
 def register():

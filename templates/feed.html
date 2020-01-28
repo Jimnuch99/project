@@ -1,53 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Feed</title>
-  <link rel="shortcut icon" href="doc/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="doc/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../static/feed.css">
-  <link rel="stylesheet" href="../static/w3.css">
-
-
+    <meta charset="UTF-8">
+    <title>Feed</title>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="doc/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="doc/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/generalstyles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/w3.css">
 </head>
 <body>
 <main class="main">
 <aside class="sidebar">
     <nav class="nav">
       <ul>
-        <li><h3>Welcome memelord, {{session.username}}</h3></li>
-        <li class="active"><a href="/feed">Feed</a></li>
-        <li><a href="/search">Search</a></li>
-        <li><a href="/post">Upload</a></li>
-        <li><a href="/account">Account</a></li>
-        <li><a href="/personalfeed">Personal feed</a></li>
-        <li><a href="/savedmemes">Saved Memes</a></li>
-        <li><a href="/logout">Logout</a></li>
+        <li img src="../static/donald.png">
+        <h3>Welcome memelord, {{session.username}}</h3>
+        </li>
+        <li class="active">
+        <a href="/feed"><i class="fa fa-home"></i>All memes</a>
+        </li>
+        <li>
+        <a href="/personalfeed"><i class="fa fa-users"></i>Personal feed</a>
+        </li>
+        <li>
+        <a href="/search"><i class="fa fa-search"></i>Search</a>
+        </li>
+        <li>
+        <a href="/post"><i class="fa fa-upload"></i>Upload</a>
+        </li>
+        <li>
+        <a href="/savedmemes"><i class="fa fa-download"></i>Saved Memes</a>
+        </li>
+        <li>
+        <a href="/account"><i class="fa fa-user"></i>My account</a>
+        </li>
+        <li>
+        <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
+        </li>
       </ul>
     </nav>
   </aside>
 </main>
-<center>
-<section class="twitter">
-<div class="w3-container">
-{% for meme in memes %}
-  <div class="w3-card-4 w3-pale-red" style="width:35%">
-    <div class="w3-container w3-center">
-      <h4 style="color: black; font-weight: bold">Uploaded by: {{ meme.username }}</h4>
-      <iframe src="{{ meme.url }}" max-width="480" max-height="311" frameBorder="0" class="giphy-embed"></iframe>
-      <div class="w3-section">
-      	<form action="/savememe" method="post">
-        <button type="submit" name="meme_id" value="{{ meme.id }}" class="w3-button w3-black">Save meme</button>
-        </form>
-        <form action="/followuser" method="post">
-        <button type="submit" name="meme_id" value="{{ meme.id }}" class="w3-button w3-black">Follow user</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-{% endfor %}
-</section>
-</center>
-</main>
+    <section class="twitter">
+    <div class="w3-container">
+        <div class="row main-feed">
+            {% for meme in memes %}
+            <div class="col-sm-12 offset-md-2 col-md-6 feed-item">
+                <div class="row feed-nav">
+                    <div class="col-sm-1">
+                        <div class="profile-pic">
+                            <img src="../static/donald.png" alt="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="username"><h6 class="username"><b>@{{meme.username}}</b></h6></div>
+                    </div>
+                    <div class="offset-sm-4 col-sm-1">
+                        ...
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 feed-image">
+                         <center><iframe src="{{ meme.url }}" width="500" height="500" frameborder="0"></iframe></center>
+                    </div>
+                </div>
+                <div class="row commands">
+                    <div class="col-sm-1 like" style="margin: 0 0 -15px -15px">
+                        <i class="fa fa-download" style="color:black;font-size:20px"></i>
+                    </div>
+                    <div class="col-sm-10">
+                        <small><b>36k likes</b></small>
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+                <div class="row comments">
+                    <div class="col-sm-12">
+                        <div class="small-username">
+                            <small><b>Tomskilogt69</b></small>
+                            <small>Little meme about my life</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="small-username">
+                            <small><b>Tomskilogt69</b></small>
+                            <small>Little meme about my life</small>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="small-username">
+                            <small><b>Tomskilogt69</b></small>
+                            <small>Little meme about my life</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row timestamp">
+                    <div class="col-sm-12">
+                        <small>{{meme.timestamp}}</small>
+                    </div>
+                </div>
+                <div class="row comment-input">
+                    <div class="col-sm-10">
+                    </div>
+                    <div class="col-sm-2">
+                        <form>
+                        <button type="submit" name="meme_id" value="{{ meme.id }}" class="w3-button w3-green">Follow {{meme.username}}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
 </body>
 </html>

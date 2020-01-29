@@ -17,7 +17,7 @@ Buiten deze mappen is het bestand meme.db belangrijk. Hierin staan de tabellen d
 - taakverdeling
 
 Jim en Tommy hebben zich meer gericht op het python gedeelte en het schrijven van de routes. Ook zijn er python delen waar we alle drie aan gewerkt hebben. Jim heeft zich hierbij vooral gericht op het implementeren van de API key en de sql queries.
-Juriaan en Tommy hebben de meeste bijdrage aan het html gedeelte.
+Juriaan en Tommy hebben het meeste bijgedragen aan het html gedeelte.
 
 
 * login
@@ -42,7 +42,7 @@ Op het account kan een ingelogde gebruiker de memes zien die hij zelf gepost hee
 
 * search
 
-Door de zoekterm te vergelijken met de gebruikersnamen in de database worden gebruikers weergegeven die dezelfde volgorde in letters bevatten als de zoekterm. Dit gebeurt met behulp van de functie search_term. Zodra een gebruiker de resultaten ziet kan hij deze ook meteen volgen en belanden alle memes van de gevolgde gebruiker in de personal feed.
+Door de zoekterm te vergelijken met de gebruikersnamen in de database worden gebruikers weergegeven die dezelfde volgorde in letters bevatten als de zoekterm. Dit gebeurt met behulp van de functie search_term. Op deze manier kan een gebruiker zien welke gebruiksernamen al bezet zijn en of er misschien leuke originele namen tussen zitten.
 
 * saved memes
 
@@ -65,5 +65,7 @@ Door de hele session te ‘clearen’ ga je terug naar het register scherm. Dit 
 - login_required
 
 ## Hulpbronnen
-- Giffy API 
+- Giffy API
+
+
 

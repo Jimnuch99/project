@@ -207,7 +207,7 @@ def followuser():
 
     return redirect("/personalfeed")
 
-@app.route('/unfollowUser')
+@app.route('/unfollowUser', methods=["POST"])
 @login_required
 def unfollowUser():
 
@@ -228,13 +228,13 @@ def personalfeed():
     users = db.execute("SELECT user_id2 FROM followedusers WHERE user_id=:user_id", user_id=user_id)
 
     if not users:
-        flash("You don't follow peopje")
+        flash("You are not following any memelord(s)")
         return redirect("/feed")
 
     followlist = []
     for x in users:
         db.execute("SELECT url FROM memes WHERE user_id=:user_id", user_id=x["user_id2"])
-        followlist.append( db.execute("SELECT url FROM memes WHERE user_id=:user_id", user_id=x["user_id2"]))
+        followlist.append( db.execute("SELECT url, id FROM memes WHERE user_id=:user_id", user_id=x["user_id2"]))
 
     return render_template("personalfeed.html", memes=followlist[0])
 
@@ -253,6 +253,7 @@ def savememe():
                          user_id=user_id,
                          meme_id=meme_id)
 
+    flash("Meme saved, stonks!")
     return redirect("/savedmemes")
 
 @app.route("/savedmemes")
@@ -263,6 +264,24 @@ def savedmemes():
     rows = db.execute("SELECT url FROM savedmemes, memes WHERE savedmemes.meme_id = memes.id AND savedmemes.user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
     print(rows)
     return render_template("savedmemes.html", memes=rows)
+
+@app.route("/check", methods=["GET"])
+def check():
+    """ Return true if username available, else false, in JSON format """
+
+    # Get username that the user would like to have
+    username = request.form.get("username")
+
+    # Check if username already exists in users
+    rows = db.execute("SELECT * FROM users WHERE username=:username", username=username)
+
+    # return False if the username is unique else True
+    if len(rows) != 0 or len(username) == 0:
+        return jsonify(False)
+
+    else:
+        return jsonify(True)
+
 
 @app.route("/logout")
 def logout():

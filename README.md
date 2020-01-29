@@ -2,6 +2,7 @@
 Jim Nuchelmans, Juriaan Wagenaar & Tommy van de Logt
 
 ![](https://github.com/Jimnuch99/project/blob/master/docs/login.jpg)
+
 ![](https://github.com/Jimnuch99/project/blob/master/docs/feed.jpg)
 
 ## Handleiding

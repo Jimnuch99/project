@@ -2,51 +2,34 @@
 <html>
 <head>
   <title>Userresults</title>
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/static/favicon.ico">
   <link rel="stylesheet" href="../static/generalstyles.css">
   <link rel="stylesheet" href="../static/w3.css">
-
 </head>
-<body id= "bdy">
+<body>
 <main class="main">
 <aside class="sidebar">
     <nav class="nav">
       <ul>
         <li><h3>Welcome memelord, {{session.username}}</h3></li>
-        <li>
-        <a href="/feed"><i class="fa fa-home"></i>All memes</a>
-        </li>
-        <li>
-        <a href="/personalfeed"><i class="fa fa-users"></i>Personal feed</a>
-        </li>
-        <li class="active">
-        <a href="/search"><i class="fa fa-search"></i>Search</a>
-        </li>
-        <li>
-        <a href="/post"><i class="fa fa-upload"></i>Upload</a>
-        </li>
-        <li>
-        <a href="/savedmemes"><i class="fa fa-download"></i>Saved Memes</a>
-        </li>
-        <li>
-        <a href="/account"><i class="fa fa-user"></i>My account</a>
-        </li>
-        <li>
-        <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
-        </li>
+        <li><a href="/feed">Feed</a></li>
+        <li class="active"><a href="/search">Search</a></li>
+        <li><a href="/post">Upload</a></li>
+        <li><a href="/account">Account</a></li>
+        <li><a href="/personalfeed">Personal feed</a></li>
+        <li><a href="/savedmemes">Saved Memes</a></li>
+        <li><a href="/logout">Logout</a></li>
       </ul>
     </nav>
   </aside>
 </main>
 <center>
-<section id="twitter">
-<div>
-{% for user in results %}
-<p> {{ user.username }}</p>
-<a href="followUser.html?userId={{ user.id}}">Follow</a>
+{% for result in results %}
+<form action="/followUser" method="post">
+<button type="submit" name="test" value="{{ result.username }}" class="w3-button w3-green" float- "left">Follow @ {{ result.username }}</button>
+</form>
 {% endfor %}
-</div>
+
 </center>
 </body>
 </html>

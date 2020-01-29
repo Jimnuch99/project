@@ -1,51 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Searchresults</title>
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="shortcut icon" href="doc/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="doc/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../static/generalstyles.css">
-  <link rel="stylesheet" href="../static/w3.css">
+    <title>Searchresults</title>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="doc/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="doc/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/generalstyles.css">
+    <link rel="stylesheet" href="../static/w3.css">
 </head>
+
 <body>
-<main class="main">
-<aside class="sidebar">
-    <nav class="nav">
-      <ul>
-        <li><h3>Welcome memelord, {{session.username}}</h3></li>
-        <li>
-        <a href="/feed"><i class="fa fa-home"></i>All memes</a>
-        </li>
-        <li>
-        <a href="/personalfeed"><i class="fa fa-users"></i>Personal feed</a>
-        </li>
-        <li>
-        <a href="/search"><i class="fa fa-search"></i>Search</a>
-        </li>
-        <li class="active">
-        <a href="/post"><i class="fa fa-upload"></i>Upload</a>
-        </li>
-        <li>
-        <a href="/savedmemes"><i class="fa fa-download"></i>Saved Memes</a>
-        </li>
-        <li>
-        <a href="/account"><i class="fa fa-user"></i>My account</a>
-        </li>
-        <li>
-        <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-</main>
-<center>
-{% for result in results %}
-        <iframe src="{{ result.embed_url }}" width="480" height="311" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-        <form action="/postmeme" method="post">
-            <button type="submit" name="embed_url" value="{{ result.embed_url }}">Post meme</button>
-        </form>
-{% endfor %}
-</center>
+    <main class="main">
+        <aside class="sidebar">
+            <nav class="nav">
+                <ul>
+                    <li>
+                        <h3>Welcome memelord, {{session.username}}</h3></li>
+                    <li>
+                        <a href="/feed"><i class="fa fa-home"></i>All memes</a>
+                    </li>
+                    <li>
+                        <a href="/personalfeed"><i class="fa fa-users"></i>Personal feed</a>
+                    </li>
+                    <li>
+                        <a href="/search"><i class="fa fa-search"></i>Search</a>
+                    </li>
+                    <li class="active">
+                        <a href="/post"><i class="fa fa-upload"></i>Upload</a>
+                    </li>
+                    <li>
+                        <a href="/savedmemes"><i class="fa fa-download"></i>Saved Memes</a>
+                    </li>
+                    <li>
+                        <a href="/account"><i class="fa fa-user"></i>My account</a>
+                    </li>
+                    <li>
+                        <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <span>{{ message }}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
+    </main>
+    <section class="twitter">
+        <div class="w3-container">
+            <div class="row main-feed">
+                {% for result in results %}
+                <div class="col-sm-12 offset-md-2 col-md-6 feed-item">
+                    <div class="row feed-nav">
+                        <div class="col-sm-1">
+                            <div class="profile-pic">
+                                <img src="../static/donald.png" alt="">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="username">
+                                <h6 class="username"><b></b></h6></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 feed-image" style="background-color:black;">
+                            <center>
+                                <iframe src="{{ result.embed_url }}" width="500" height="500" frameborder="0"></iframe>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="row commands">
+                        <div class="col-sm-1 like" style="margin: 0 0 -15px -15px">
+                            <tr>
+                                <td>
+                                    <form action="/postmeme" method="post">
+                                        <button type="submit" name="embed_url" value="{{ result.embed_url  }}" class="w3-button w3-red" float="left">Post this amazing meme</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+    </section>
 </body>
+
 </html>

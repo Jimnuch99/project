@@ -210,7 +210,16 @@ def followuser():
 @app.route('/unfollowUser')
 @login_required
 def unfollowUser():
-    return redirect("/personalfeed")
+
+    user_id = session.get("user_id")
+    meme_id = request.form.get("meme_id")
+    column = db.execute("SELECT user_id FROM memes WHERE id=:meme_id", meme_id=meme_id)
+    user_id2 = column[0]["user_id"]
+    db.execute("DELETE FROM followedusers WHERE user_id=user_id AND user_id2=:user_id2", user_id2=user_id2)
+
+    flash("Did you not like the memes?")
+
+    return redirect("/feed")
 
 @app.route("/personalfeed")
 @login_required

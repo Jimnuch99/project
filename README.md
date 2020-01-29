@@ -2,7 +2,7 @@
 Jim Nuchelmans, Juriaan Wagenaar & Tommy van de Logt
 
 ![](feed.jpg)
-<img src="feed.jpg"
+<img src="feed.png"
      alt="feed"
      style="float: left; margin-right: 10px;" />
 

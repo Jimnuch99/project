@@ -6,6 +6,26 @@
   <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../static/generalstyles.css">
   <link rel="stylesheet" href="../static/w3.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+input[type=text] {
+  width: 130px;
+  border: 2px solid #de82ff;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+  width: 50%;
+}
+</style>
 </head>
 <body id = "bdy">
 <main class="main">
@@ -40,12 +60,8 @@
 </main>
 <center>
 <section id="twitter">
-<form action="/search" method="POST">
-  <div class="form-group">
-    <label for="search">Search Users</label>
-    <input id="search" type="search" class="form-control" name="search">
-  </div>
-  <button type="submit" id="search" class="btn btn-primary">Search</button>
+<form action="/search" method ="POST">
+  <input type="text" name="search" placeholder="Search">
 </form>
 </center>
 </body>

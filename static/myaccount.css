@@ -1,0 +1,53 @@
+/* Three columns side by side */
+.column {
+  float: left;
+  width: 30%;
+  margin-bottom: 6px;
+  margin-right: 5px;
+  padding: 0 8px;
+  background-color: #000000c7;
+  max-height: 250px;
+}
+
+/* Display the columns below each other instead of side by side on small screens */
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+/* Some left and right padding inside the container */
+.container {
+  padding: 0 10px;
+}
+
+/* Clear floats */
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: black;
+}
+
+.rowsearch {
+ margin-left: 10%;
+ margin-right: 7%;
+}
+
+.rowintro {
+    margin-left: 5%;
+    margin-right: 5%;
+
+}
+
+.myaccount {
+  position: relative;
+  width: 75%;
+  float: right;
+  height: 100vh;
+  background-color:#a711eb8f;
+}

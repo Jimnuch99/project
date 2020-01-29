@@ -207,10 +207,19 @@ def followuser():
 
     return redirect("/personalfeed")
 
-@app.route('/unfollowUser')
+@app.route('/unfollowUser', methods=["POST"])
 @login_required
 def unfollowUser():
-    return redirect("/personalfeed")
+
+    user_id = session.get("user_id")
+    meme_id = request.form.get("meme_id")
+    column = db.execute("SELECT user_id FROM memes WHERE id=:meme_id", meme_id=meme_id)
+    user_id2 = column[0]["user_id"]
+    db.execute("DELETE FROM followedusers WHERE user_id=user_id AND user_id2=:user_id2", user_id2=user_id2)
+
+    flash("")
+
+    return redirect("/feed")
 
 @app.route("/personalfeed")
 @login_required
@@ -219,13 +228,13 @@ def personalfeed():
     users = db.execute("SELECT user_id2 FROM followedusers WHERE user_id=:user_id", user_id=user_id)
 
     if not users:
-        flash("You don't follow peopje")
+        flash("You are not following any memelord(s)")
         return redirect("/feed")
 
     followlist = []
     for x in users:
         db.execute("SELECT url FROM memes WHERE user_id=:user_id", user_id=x["user_id2"])
-        followlist.append( db.execute("SELECT url FROM memes WHERE user_id=:user_id", user_id=x["user_id2"]))
+        followlist.append( db.execute("SELECT url, id FROM memes WHERE user_id=:user_id", user_id=x["user_id2"]))
 
     return render_template("personalfeed.html", memes=followlist[0])
 

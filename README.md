@@ -1,9 +1,9 @@
 # Memestagram
 - Jim Nuchelmans, Juriaan Wagenaar & Tommy van de Logt
 
-- ![](https://github.com/Jimnuch99/project/blob/master/docs/login.jpg)
+ ![](https://github.com/Jimnuch99/project/blob/master/docs/login.jpg)
 
-- ![](https://github.com/Jimnuch99/project/blob/master/docs/feed.jpg)
+ ![](https://github.com/Jimnuch99/project/blob/master/docs/feed.jpg)
 
 ## Handleiding
 Zodra u bent ingelogd op de website zult u op de feed pagina komen. Dit is de centrale plek waarop alle memes van alle gebruikers worden weergegeven. In de menubalk links op de website ziet u de verschillende opties die de website te bieden heeft. Op zich spreekt alles voor zich. Om u beter op weg te helpen wordt hieronder uitgelegd wat de verschillende functies doen en hoe ze tot stand zijn gekomen.

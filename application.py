@@ -6,7 +6,7 @@ from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+from werkzeug.exceptions import InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
@@ -31,39 +31,32 @@ Session(app)
 db = SQL("sqlite:///meme.db")
 api_key = "SFc7YRbTLzNil5YjMQyFhFI2y66KptWm"
 
-# @app.route("/personalfeed", methods =["GET", "POST"])
-# @login_required
-# def personalfeed():
-#     return render_template("personalfeed.html")
-
 @app.route("/", methods=["GET", "POST"])
 def register():
     """Register user"""
     if request.method == "POST":
 
-        # ensure username was submitted
+        # Ensure username was submitted
         if not request.form.get("username"):
             flash("Must provide username")
             return redirect('/')
 
-        # ensure password was submitted
+        # Ensure password was submitted
         elif not request.form.get("password"):
             flash("Must provide password")
             return redirect("/")
 
         elif not re.match(r'[A-Za-z0-9@#$%^&+=]{8,}', request.form.get("password")):
-         # no match
+         # No match
             flash("Passwords don't match")
             return redirect('/')
 
-            #return apology("Password must contain at least 8 characters, one uppercase letter, one special character and one number")
-
-        # ensure password and verified password is the same
+        # Ensure password and verified password is the same
         elif request.form.get("password") != request.form.get("confirmation"):
             flash("Passwords don't match")
             return redirect('/')
 
-        # insert the new user into users, storing the hash of the user's password
+        # Insert the new user into users, storing the hash of the user's password
         result = db.execute("INSERT INTO users (username, hash) \
                              VALUES(:username, :hash)", \
                              username=request.form.get("username"), \
@@ -127,6 +120,7 @@ def login():
 @app.route("/feed")
 @login_required
 def feed():
+    # Show all posts out of the database
     rows = db.execute("SELECT url, username, memes.id FROM memes, users WHERE memes.user_id = users.id ORDER BY timestamp DESC LIMIT 20")
     return render_template("feed.html", memes=rows)
 
@@ -134,6 +128,8 @@ def feed():
 @login_required
 def post():
     if request.method == "POST":
+
+        # Search trough the API with the search term
         search_term = request.form.get("search")
 
         url = 'http://api.giphy.com/v1/gifs/search'
@@ -141,6 +137,7 @@ def post():
 
         response=json.loads(urllib.request.urlopen(url + '?' + urllib.parse.urlencode(values)).read())
 
+        # Display the search results
         return render_template("searchresults.html", results=response["data"])
     else:
         return render_template("post.html")
@@ -148,24 +145,30 @@ def post():
 @app.route("/postmeme", methods=["POST"])
 @login_required
 def postmeme():
+
+    # Post the chosen meme from 'post'
     user_id = session.get("user_id")
     url = request.form.get("embed_url")
-    result = db.execute("INSERT INTO memes (user_id, url) \
-                         VALUES(:user_id, :url)",
-                         user_id=user_id,
-                         url=url)
+
+    # Insert the url from the chosen meme into the database
+    result = db.execute("INSERT INTO memes (user_id, url) VALUES(:user_id, :url)", user_id=user_id, url=url)
+    flash("Stonks, memelord")
     return redirect("/feed")
 
 @app.route("/account")
 @login_required
 def account():
+
+    # Show all posts on the personal account page from the logged in user
     rows = db.execute("SELECT url FROM memes WHERE user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
     print(rows)
     return render_template("account.html", memes=rows)
 
 @app.route("/search", methods=["GET", "POST"])
 def search():
+
     if request.method == "POST":
+        # Query the database for the searchterm (search for usernames)
         search_term = request.form.get("search")
         rows = db.execute("SELECT id, username FROM users WHERE username LIKE %s", ("%" + search_term + "%",))
         for row in rows:
@@ -174,48 +177,75 @@ def search():
     else:
         return render_template("search.html")
 
-# @app.route("/followUser")
-# @login_required
-# def followuser():
-#     user_id = self.request.get("userId")
-#     print(user_id)
-#     return user_id
-
-@app.route("/savememe", methods=["POST"])
-@login_required
-def savememe():
-    user_id = session.get("user_id")
-    meme_id = request.form.get("meme_id")
-    result = db.execute("INSERT INTO savedmemes (user_id, meme_id) \
-                         VALUES(:user_id, :meme_id)",
-                         user_id=user_id,
-                         meme_id=meme_id)
-    return redirect("/feed")
-
-@app.route("/savedmemes")
-@login_required
-def savedmemes():
-    rows = db.execute("SELECT url FROM savedmemes, memes WHERE savedmemes.meme_id = memes.id AND savedmemes.user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
-    print(rows)
-    return render_template("savedmemes.html", memes=rows)
-
-@app.route("/followuser")
+@app.route("/followUser", methods=["POST"])
 @login_required
 def followuser():
+
+    # Ask for the current logged in user
     user_id = session.get("user_id")
-    user_id2 = request.form.get("user_id2")
-    result = db.execute("INSERT INTO followedusers (user_id, user_id2) \
-                         VALUES(:user_id, :user_id2)",
-                         user_id=user_id,
-                         user_id2=user_id2)
-    return redirect("/feed")
+    meme_id = request.form.get("meme_id")
+    # Select the user_id from the uploader from the meme
+    column = db.execute("SELECT user_id FROM memes WHERE id=:meme_id", meme_id=meme_id)
+    user_id2 = column[0]["user_id"]
+    # Select all memes from the uploader from the meme
+    dbquery = db.execute("SELECT * FROM followedusers WHERE user_id=:user_id AND user_id2=:user_id2", user_id=user_id, user_id2=user_id2)
+
+    # If the logged in users wants to follom him or herself
+    if user_id == user_id:
+        flash("It isn't possible to follow yourself")
+        return redirect("/feed")
+
+    # If the logged in user already follows the user he/she wants to follow
+    elif user_id == user_id2:
+        flash("You already follow this user")
+
+    # Insert the relation into the followedusers table
+    else:
+        db.execute("INSERT INTO followedusers (user_id, user_id2) VALUES (:user_id, :user_id2)", user_id=user_id, user_id2=column[0]["user_id"])
+        flash("Success")
+
+    return redirect("/personalfeed")
+
+@app.route('/unfollowUser')
+@login_required
+def unfollowUser():
+    return redirect("/personalfeed")
 
 @app.route("/personalfeed")
 @login_required
 def personalfeed():
-    rows = db.execute("SELECT user_id2 FROM followedusers, memes WHERE followedusers.user_id2 = user_id2 AND followedusers.user_id2 = :user_id", user_id=session["user_id"])
+
+    # Display all memes from users that the logged in user follows
+    usersesh = session.get("user_id")
+    rows = db.execute("SELECT url,memes.user_id FROM memes JOIN followedusers ON followedusers.user_id2=memes.user_id AND memes.user_id=:usersesh", usersesh=usersesh)
+
+    return render_template("personalfeed.html", memes=rows)
+
+
+@app.route("/savememe", methods=["POST"])
+@login_required
+def savememe():
+
+    # Ask for the current logged in user and ask for the meme_id that the user would like to save
+    user_id = session.get("user_id")
+    meme_id = request.form.get("meme_id")
+
+    # Query the database and put in in the savedmemes table
+    result = db.execute("INSERT INTO savedmemes (user_id, meme_id) \
+                         VALUES(:user_id, :meme_id)",
+                         user_id=user_id,
+                         meme_id=meme_id)
+
+    return redirect("/savedmemes")
+
+@app.route("/savedmemes")
+@login_required
+def savedmemes():
+
+    #display all saved memes from the logged in user
+    rows = db.execute("SELECT url FROM savedmemes, memes WHERE savedmemes.meme_id = memes.id AND savedmemes.user_id = :user_id ORDER BY timestamp DESC LIMIT 20", user_id=session["user_id"])
     print(rows)
-    return render_template("personalfeed.html", followedusers=rows)
+    return render_template("savedmemes.html", memes=rows)
 
 @app.route("/logout")
 def logout():
@@ -225,7 +255,7 @@ def logout():
     session.clear()
 
     # Redirect user to login form
-    return redirect("/")
+    return redirect("/login")
 
 
 

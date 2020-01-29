@@ -1,50 +1,82 @@
 <!DOCTYPE html>
 <HTML>
+
 <head>
-  <title>Account</title>
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="icon" href="/static/favicon.ico">
-  <link rel="stylesheet" href="../static/generalstyles.css">
-  <link rel="stylesheet" href="../static/w3.css">
+    <title>Account</title>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="doc/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="doc/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../static/myaccount.css">
+    <link rel="stylesheet" href="../static/generalstyles.css">
 </head>
-<body id = "bdy">
-<main class="main">
-<aside class="sidebar">
-    <nav class="nav">
-      <ul>
-        <li><h3>Welcome memelord, {{session.username}}</h3></li>
-        <li>
-        <a href="/feed"><i class="fa fa-home"></i>All memes</a>
-        </li>
-        <li>
-        <a href="/personalfeed"><i class="fa fa-users"></i>Personal feed</a>
-        </li>
-        <li>
-        <a href="/search"><i class="fa fa-search"></i>Search</a>
-        </li>
-        <li>
-        <a href="/post"><i class="fa fa-upload"></i>Upload</a>
-        </li>
-        <li>
-        <a href="/savedmemes"><i class="fa fa-download"></i>Saved Memes</a>
-        </li>
-        <li class="active">
-        <a href="/account"><i class="fa fa-user"></i>My account</a>
-        </li>
-        <li>
-        <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
-</main>
-<center>
-{% for meme in memes %}
-  <div>
-    <B>{{ meme.username }}</B>
-    <iframe src="{{ meme.url }}" width="480" height="311" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-  </div>
-{% endfor %}
-</center>
+
+<body id="bdy">
+    <main class="main">
+        <aside class="sidebar">
+            <nav class="nav">
+                <ul>
+                    <li>
+                        <h3>Welcome memelord, {{session.username}}</h3></li>
+                    <li>
+                        <a href="/feed"><i class="fa fa-home"></i>All memes</a>
+                    </li>
+                    <li>
+                        <a href="/personalfeed"><i class="fa fa-users"></i>Personal feed</a>
+                    </li>
+                    <li>
+                        <a href="/search"><i class="fa fa-search"></i>Search</a>
+                    </li>
+                    <li>
+                        <a href="/post"><i class="fa fa-upload"></i>Upload</a>
+                    </li>
+                    <li>
+                        <a href="/savedmemes"><i class="fa fa-download"></i>Saved Memes</a>
+                    </li>
+                    <li class="active">
+                        <a href="/account"><i class="fa fa-user"></i>My account</a>
+                    </li>
+                    <li>
+                        <a href="/logout"><i class="fa fa-sign-out"></i>Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+    </main>
+    <section class="myaccount">
+        <center>
+            <h2>Did you lick da poopoo, {{session.username}}?</h2>
+            <div class="rowintro">
+                <p style="text-align:left;">A meme is an idea, any idea. It is something in human mind.
+                It could be the idea (the essential content) of a joke, or a scientific hypothesis, or the idea that we shouldn't eat meat.
+                The human mind is full of ideas, some of which live a very short lives whereas others might have been adopted in early childhood
+                and kept through the individual's whole life. Some ideas have the property of being either true or false,
+                or perhaps being partly true and partly false, on the basis of their correspondence with the reality outside the human mind.
+                Or perhaps you have a different truth theory. The point, anyway, is that some ideas are propositions in the logical sense; a scientific hypothesis,
+                is a typical example. But most ideas aren't propositions; a joke is just a story, and whether it is based on actual events is irrelevant.
+                The principle "eating meat is wrong", or any moral principle, might be regarded as a proposition by some philosophers.
+                And an idea that merely consists of, say, giving preference to Dom Perignon over other brands of champagne surely isn't a proposition.
+                (It still need not be just a matter of taste; it might be an idea adopted from literature and films, even before tasting any champagne.)
+                </p>
+            </div>
+
+            <br>
+
+            <div class="rowsearch">
+                {% for meme in memes %}
+                <div class="column">
+                    <div class="card">
+                        <center>
+                            <iframe src="{{ meme.url }}" max-width='25%' max-height="25%" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                        </center>
+                        <div class="container">
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </center>
+    </section>
 </body>
+
 </html>

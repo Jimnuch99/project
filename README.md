@@ -4,7 +4,7 @@ Jim Nuchelmans, Juriaan Wagenaar & Tommy van de Logt
 ![](https://github.com/Jimnuch99/project/blob/master/docs/login.jpg)
 ![](https://github.com/Jimnuch99/project/blob/master/docs/feed.jpg)
 
-# Handleiding
+## Handleiding
 Zodra u bent ingelogd op de website zult u op de feed pagina komen. Dit is de centrale plek waarop alle memes van alle gebruikers worden weergegeven. In de menubalk links op de website ziet u de verschillende opties die de website te bieden heeft. Op zich spreekt alles voor zich. Om u beter op weg te helpen wordt hieronder uitgelegd wat de verschillende functies doen en hoe ze tot stand zijn gekomen.
 
 - repository
@@ -12,7 +12,7 @@ Zodra u bent ingelogd op de website zult u op de feed pagina komen. Dit is de ce
 In de repository staan de mappen static en templates. In static kunt u de afbeeldingen vinden die gebruikt zijn tijdens het maken van de site. Ook de css bestanden zijn te vinden in de static map. In templates staan alle html templates die we gemaakt hebben.
 Buiten deze mappen is het bestand meme.db belangrijk. Hierin staan de tabellen die gebruikt worden voor de website.
 
-# Features/taakverdeling
+## Features/taakverdeling
 - taakverdeling
 
 Jim en Tommy hebben zich meer gericht op het python gedeelte en het schrijven van de routes. Ook zijn er python delen waar we alle drie aan gewerkt hebben. Jim heeft zich hierbij vooral gericht op het implementeren van de API key en de sql queries.
@@ -59,7 +59,10 @@ De unfollow functie is gemaakt om ervoor te zorgen dat als een gebruiker de meme
 
 Door de hele session te ‘clearen’ ga je terug naar het register scherm. Dit is handig voor als iemand toevallig heeft ingelogd met het verkeerde account.
 
-# Helpers
+## Helpers
 
 - login_required
+
+## Hulpbronnen
+- Giffy API 
 

@@ -16,7 +16,8 @@
         <li>
         <a href="/feed"><i class="fa fa-home"></i>All memes</a>
         </li>
-        <li>        <a href="/personalfeed"><i class="fa fa-users"></i>Personal feed</a>
+        <li>
+        <a href="/personalfeed"><i class="fa fa-users"></i>Personal feed</a>
         </li>
         <li class="active">
         <a href="/search"><i class="fa fa-search"></i>Search</a>
@@ -37,6 +38,15 @@
     </nav>
   </aside>
 </main>
-
+<center>
+<section id="twitter">
+<form action="/search" method="POST">
+  <div class="form-group">
+    <label for="search">Search Users</label>
+    <input id="search" type="search" class="form-control" name="search">
+  </div>
+  <button type="submit" id="search" class="btn btn-primary">Search</button>
+</form>
+</center>
 </body>
 </html>

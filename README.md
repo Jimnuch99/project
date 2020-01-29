@@ -1,7 +1,7 @@
 # Memestagram
 Jim Nuchelmans, Juriaan Wagenaar & Tommy van de Logt
 
-![](./pic/pic1s.png =250x/https://github.com/Jimnuch99/project/blob/master/docs/feed.jpg)
+![](https://github.com/Jimnuch99/project/blob/master/docs/feed.jpg =250x)
 ![](https://github.com/Jimnuch99/project/blob/master/docs/login.jpg)
 ![](https://github.com/Jimnuch99/project/blob/master/docs/upload.jpg)
 

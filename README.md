@@ -11,10 +11,12 @@ Zodra u bent ingelogd op de website zult u op de feed pagina komen. Dit is de ce
 In de repository staan de mappen static en templates. In static kunt u de afbeeldingen vinden die gebruikt zijn tijdens het maken van de site. Ook de css bestanden zijn te vinden in de static map. In templates staan alle html templates die we gemaakt hebben.
 Buiten deze mappen is het bestand meme.db belangrijk. Hierin staan de tabellen die gebruikt worden voor de website.
 
-# Features
+# Features/taakverdeling
 - taakverdeling
+
 Jim en Tommy hebben zich meer gericht op het python gedeelte en het schrijven van de routes. Ook zijn er python delen waar we alle drie aan gewerkt hebben. Jim heeft zich hierbij vooral gericht op het implementeren van de API key en de sql queries.
 Juriaan en Tommy hebben de meeste bijdrage aan het html gedeelte.
+
 
 - login
 

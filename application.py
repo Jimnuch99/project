@@ -191,13 +191,14 @@ def followuser():
     dbquery = db.execute("SELECT * FROM followedusers WHERE user_id=:user_id AND user_id2=:user_id2", user_id=user_id, user_id2=user_id2)
 
     # If the logged in users wants to follom him or herself
-    if user_id == user_id:
+    if user_id == user_id2:
         flash("It isn't possible to follow yourself")
         return redirect("/feed")
 
     # If the logged in user already follows the user he/she wants to follow
-    elif user_id == user_id2:
+    elif dbquery:
         flash("You already follow this user")
+        return redirect("/feed")
 
     # Insert the relation into the followedusers table
     else:
@@ -214,12 +215,19 @@ def unfollowUser():
 @app.route("/personalfeed")
 @login_required
 def personalfeed():
+    user_id = session.get("user_id")
+    users = db.execute("SELECT user_id2 FROM followedusers WHERE user_id=:user_id", user_id=user_id)
 
-    # Display all memes from users that the logged in user follows
-    usersesh = session.get("user_id")
-    rows = db.execute("SELECT url,memes.user_id FROM memes JOIN followedusers ON followedusers.user_id2=memes.user_id AND memes.user_id=:usersesh", usersesh=usersesh)
+    if not users:
+        flash("You don't follow peopje")
+        return redirect("/feed")
 
-    return render_template("personalfeed.html", memes=rows)
+    followlist = []
+    for x in users:
+        db.execute("SELECT url FROM memes WHERE user_id=:user_id", user_id=x["user_id2"])
+        followlist.append( db.execute("SELECT url FROM memes WHERE user_id=:user_id", user_id=x["user_id2"]))
+
+    return render_template("personalfeed.html", memes=followlist[0])
 
 
 @app.route("/savememe", methods=["POST"])

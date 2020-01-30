@@ -103,3 +103,6 @@ Door de hele session te ‘clearen’ ga je terug naar het register scherm. Dit 
 
 - Giffy API
 
+## Promo video
+- https://www.youtube.com/watch?v=huOK_9bxA6g&feature=youtu.be
+
